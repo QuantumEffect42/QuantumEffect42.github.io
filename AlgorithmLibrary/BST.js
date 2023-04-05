@@ -97,17 +97,54 @@ BST.prototype.reset = function()
 	this.treeRoot = null;
 }
 
-BST.prototype.insertCallback = function(event)
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+BST.prototype.insertCallback = async function(event)
 {
 	var insertedValue = this.insertField.value;
+	const splitArray = insertedValue.split(" ");
+
 	// Get text value
-	insertedValue = this.normalizeNumber(insertedValue, 4);
-	if (insertedValue != "")
-	{
-		// set text value
-		this.insertField.value = "";
-		this.implementAction(this.insertElement.bind(this), insertedValue);
+	//console.log(insertedValue);
+	for (var i = 0; i < splitArray.length; i+=1){
+		var value = splitArray[i];
+		
+		// value = this.normalizeNumber(value, 4);
+		// //insertedValue[i] = value;
+		// //console.log(splitArray.length);
+		// if (value != "" || isNaN(value)==false) 
+		// {
+		// 	// set text value
+		// 	this.insertField.value = "";
+		// 	this.implementAction(this.insertElement.bind(this), value);
+		// 	await sleep(3000);
+		// }
+		if (value === ""){
+			// do nothing
+		} 
+		else {
+			value = this.normalizeNumber(value, 4);
+			//insertedValue[i] = value;
+			//console.log(value);
+			if (value != "" || isNaN(value) != true) 
+			{
+				// set text value
+				this.insertField.value = "";
+				this.implementAction(this.insertElement.bind(this), value);
+				await sleep(3500);
+			}
+		}
 	}
+	//insertedValue = this.normalizeNumber(insertedValue, 4);
+
+	// if (insertedValue != "")
+	// {
+	// 	// set text value
+	// 	this.insertField.value = "";
+	// 	this.implementAction(this.insertElement.bind(this), insertedValue);
+	// }
 }
 
 BST.prototype.deleteCallback = function(event)

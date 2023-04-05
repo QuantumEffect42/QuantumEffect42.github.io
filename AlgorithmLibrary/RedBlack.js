@@ -122,17 +122,62 @@ var PRINT_HORIZONTAL_GAP = 50;
 var EXPLANITORY_TEXT_X = 10;
 var EXPLANITORY_TEXT_Y = 10;
 
-RedBlack.prototype.insertCallback = function(event)
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+RedBlack.prototype.insertCallback = async function(event)
 {
 	var insertedValue = this.insertField.value;
+	insertedValue = this.checkString(insertedValue);
+	const splitArray = insertedValue.split(" ");
+	var arrayCheck = 0; 
+	var timeCheck = 0;
 	// Get text value
-	insertedValue = this.normalizeNumber(insertedValue, 4);
-	if (insertedValue != "")
-	{
-		// set text value
-		this.insertField.value = "";
-		this.implementAction(this.insertElement.bind(this), insertedValue);
+	//console.log(insertedValue);
+	for (var i = 0; i < splitArray.length; i+=1){
+		var value = splitArray[i];
+		
+		if (i%10==0 || i == 1){
+			arrayCheck++;
+		}
+		
+
+		if (value === ""){
+			// do nothing
+		} 
+		else {
+			value = this.normalizeNumber(value, 4);
+			//insertedValue[i] = value;
+			//console.log(value);
+			if (value != "" || isNaN(value) != true) 
+			{
+				// set text value
+				this.insertField.value = "";
+				//this.implementAction(this.insertElement.bind(this), value);
+				//await sleep(7000);
+				
+				const task = new Promise((resolve, reject) => {
+					// things that take long go here…
+					//this.implementAction(this.insertElement.bind(this), value);
+					const duration = 5000*arrayCheck
+			
+
+					setTimeout(() => {
+					  this.implementAction(this.insertElement.bind(this), value);
+					  //console.log(`done, task took ${Math.round(duration)}ms`)
+					  resolve();
+					}, duration)
+					
+				  })
+				  // wait until task is finished but at least 6 seconds
+				  await Promise.all([task, sleep(7000*timeCheck)])
+
+			}
+		}
 	}
+
+
 }
 
 RedBlack.prototype.deleteCallback = function(event)
