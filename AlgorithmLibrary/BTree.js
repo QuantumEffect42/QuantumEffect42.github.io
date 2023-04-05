@@ -257,13 +257,35 @@ BTree.prototype.maxDegreeChangedHandler = function(newMaxDegree, event)
 
 BTree.prototype.insertCallback = function(event)
 {
-	var insertedValue;
-	insertedValue = this.normalizeNumber(this.insertField.value, 4);
-	if (insertedValue != "")
-	{
-		this.insertField.value = "";
-		this.implementAction(this.insertElement.bind(this),insertedValue);
+	// var insertedValue;
+	// insertedValue = this.normalizeNumber(this.insertField.value, 4);
+	// if (insertedValue != "")
+	// {
+	// 	this.insertField.value = "";
+	// 	this.implementAction(this.insertElement.bind(this),insertedValue);
+	// }
+	var insertedValue = this.insertField.value;
+	// Get text value
+	//console.log(insertedValue);
+	for (var i = 0; i < insertedValue.length; i+=2){
+		var value = insertedValue[i];
+		value = this.normalizeNumber(value, 4);
+		//insertedValue[i] = value;
+		if (value != "")
+		{
+			// set text value
+			this.insertField.value = "";
+			this.implementAction(this.insertElement.bind(this), value);
+		}
 	}
+	//insertedValue = this.normalizeNumber(insertedValue, 4);
+
+	// if (insertedValue != "")
+	// {
+	// 	// set text value
+	// 	this.insertField.value = "";
+	// 	this.implementAction(this.insertElement.bind(this), insertedValue);
+	// }
 }
 		
 BTree.prototype.deleteCallback = function(event)

@@ -93,6 +93,7 @@ var skipBackButton;
 var stepBackButton;
 var stepForwardButton;
 var skipForwardButton;
+var resetButton;
 
 var widthEntry;
 var heightEntry;
@@ -159,6 +160,7 @@ function animStarted()
 	skipBackButton.disabled = false;
 	stepForwardButton.disabled = true;
 	stepBackButton.disabled = true;
+	resetButton.disabled = true;
 	objectManager.statusReport.setText("Animation Running");
 	objectManager.statusReport.setForegroundColor("#009900");
 }
@@ -167,6 +169,7 @@ function animEnded()
 {
 	skipForwardButton.disabled = true;
 	stepForwardButton.disabled = true;
+	resetButton.disabled = false;
 	if (skipBackButton.disabled == false && paused)
 	{
 		stepBackButton.disabled = false;		
@@ -223,6 +226,7 @@ function doPlayPause()
 	if (paused)
 	{
 		playPauseBackButton.setAttribute("value", "play");
+		//resetButton.paused = false;
 		if (skipBackButton.disabled == false)
 		{
 			stepBackButton.disabled = false;		
@@ -232,6 +236,7 @@ function doPlayPause()
 	else
 	{
 		playPauseBackButton.setAttribute("value", "pause");	
+		resetButton.paused = false;
 	}
 	animationManager.SetPaused(paused);
 }
@@ -298,7 +303,8 @@ function initCanvas()
 	stepForwardButton.onclick = animationManager.step.bind(animationManager) ;
 	skipForwardButton = addControlToAnimationBar("Button", "Skip Forward");
 	skipForwardButton.onclick = animationManager.skipForward.bind(animationManager);
-	
+	resetButton = addControlToAnimationBar("Button", "Reset");
+	resetButton.onclick = animationManager.resetAll.bind(animationManager);
 	
 	var element = document.createElement("div");
 	element.setAttribute("display", "inline-block");		
@@ -326,10 +332,8 @@ function initCanvas()
 	bottomLevel = document.createElement("td");
 	bottomLevel.align = "center";
 	var txtNode = document.createTextNode("Animation Speed"); 
-	
 	midLevel.appendChild(bottomLevel);
 	bottomLevel.appendChild(txtNode);
-	
 	newTable.appendChild(midLevel);	
 
 	
@@ -370,7 +374,7 @@ function initCanvas()
 					  }); 
 	
 	animationManager.SetSpeed(speed);
-	midLevel.re
+	
 	element.setAttribute("style", "width:200px");
 
 
@@ -405,7 +409,7 @@ function initCanvas()
 	canvas.height = height;
 	
 	
-	speedNode = document.createTextNode(speed);
+	speedNode = document.createTextNode(speed);	
 	tableEntry = document.createElement("td");
 	txtNode = document.createTextNode(" w:"); 
 	tableEntry.appendChild(txtNode);
@@ -1148,10 +1152,19 @@ function AnimationManager(objectManager)
 	
 	this.resetAll = function()
 	{
-		this.clearHistory();
-		this.animatedObjects.clearAllObjects();
-		this.animatedObjects.draw();
-		clearTimeout(timer);
+		// this.clearHistory();
+		// this.animatedObjects.clearAllObjects();
+		// this.animatedObjects.draw();
+		// //this.objectID = [];
+		// clearTimeout(timer);
+		var userChoice = confirm("Are you sure?");
+		if (userChoice){
+			this.animationBlockLength=75;
+			location.reload();
+			
+		} 
+		
+		return;
 	}
 	
 	this.skipForward = function()
