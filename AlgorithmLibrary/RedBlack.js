@@ -171,7 +171,7 @@ RedBlack.prototype.insertCallback = async function(event)
 					
 				  })
 				  // wait until task is finished but at least 6 seconds
-				  await Promise.all([task, sleep(7000*timeCheck)])
+				  await Promise.all([task, sleep(7000*arrayCheck)])
 
 			}
 		}

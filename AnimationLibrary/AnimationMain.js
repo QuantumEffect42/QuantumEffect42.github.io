@@ -1157,7 +1157,7 @@ function AnimationManager(objectManager)
 		// this.animatedObjects.draw();
 		// //this.objectID = [];
 		// clearTimeout(timer);
-		var userChoice = confirm("Are you sure?");
+		var userChoice = confirm("If you click ok, all of your input will be cleared. Are you sure?");
 		if (userChoice){
 			this.animationBlockLength=75;
 			location.reload();
